@@ -1,21 +1,22 @@
 // Setup MySQL Connection
-var sql = require('mysql');
+var mysql = require('mysql');
 
 // IMPORTANT: PASSWORDS
 // **********************************
 // **********************************
 // Passwords File
-var keys = require('./password.js');
+var keys = require('../password.js');
 // My SQL Password
 var password = keys.SQLPassword;
 // **********************************
 // **********************************
 
-var connection = mysql.createconnection({
+var connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password
+    password: password,
+    database: 'burgers_db'
 });
 
 connection.connect(function(err) {
