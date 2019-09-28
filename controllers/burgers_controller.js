@@ -1,48 +1,55 @@
+// REQUIREMENTS
+// *****************************
 var express = require("express");
-
 var router = express.Router();
-
-// Import the model
 var burger = require("../models/burger.js");
+// *****************************
 
 // Routes:
-// Select/Get All
-router.get('/', function(req, res) {
-    burger.selectAll(function(data) {
-        var burgerObject = {
-            burger: data
+// *****************************
+
+// Select All
+router.get('/', function (req, res) {
+    burger.selectAll(function (err, data) {
+        if (err) {
+            console.error(err);
+            throw err
         };
-        console.log(burgerObject);
-        res.render('index', burgerObject);
+        console.log("GET DATA: ",data);
+        res.render('index', {
+            burgers: data
+        });
     });
 });
 
-// Insert
-router.post('/api/burger', function(req, res) {
-    burger.insertOne([
-        'name', 'sleepy'
-    ],[
-        req.body.name, req.body.sleepy
-    ], function(result){
-        res.json({id: result.insertId});
+// Insert One
+router.post('/api/burger', function (req, res) {
+    burger.insertOne(req.body.name, function (err, data) {
+        if (err) {
+            console.error(err);
+            throw err
+        };
+        console.log("INSERT DATA: ",data);
+        res.sendStatus(200);
     });
 });
 
-// Update
-router.put('/api/burger/:id', function(req, res) {
-    var condition = 'id = '+ req.params.id;
+// Update One
+router.put('/api/burger/:id', function (req, res) {
+    // Variables
+    var col = req.body.col;
+    var val = req.body.val;
+    var id = req.params.id;
 
-    console.log('consition: ', condition);
-
-    burger.updateOne({
-        sleepy: req.body.sleepy
-    }, condition, function(result) {
-        if(result.changedRows == 0){
-            return res.status(404).end();
-        } else {
-            res.status(200).end();
-        }
+    burger.updateOne(col, val, id, function(err,data) {
+        if (err) {
+            console.error(err);
+            throw err
+        };
+        console.log("UPDATE DATA: ", data);
+        res.sendStatus(200);
     });
+
 });
 
 module.exports = router;
