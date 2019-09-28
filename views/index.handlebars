@@ -8,13 +8,17 @@
                {{#unless this.devoured}}
                     <h4 id="{{this.id}}">{{this.burger_name}}</h4>
                     <button data-id="{{this.id}}">Eat this Burger</button>
+               {{/unless}}
+          {{/each}}
 
     </div>
     <div class="col">
-         <h2>Burged that been eaten already!</h2>
+         <h2>Burge that been eaten already!</h2>
           {{#each Burgers}}
                {{#if this.devoured}}
                     <h4 id="{{this.id}}">{{this.burger_name}}</h4>
+               {{/if}}
+          {{/each}}
     </div>
   </div>
 </div>
