@@ -1,113 +1,43 @@
 // Import MySQL connection.
 var connection = require("../config/connection.js");
 
-// SQL Helper Function:
-// 
-function printQuestionMarks(num) {
-    var arr = [];
-
-    for (var i = 0; i < num; i++) {
-        arr.push("?");
-    }
-
-    return arr.toString();
-}
-//  ****************************
-//  ****************************
-
-
-// Helper function to convert object key/value pairs to SQL syntax
-function objToSql(ob) {
-    var arr = [];
-
-    // loop through the keys and push the key/value as a string int arr
-    for (var key in ob) {
-        var value = ob[key];
-        // check to skip hidden properties
-        if (Object.hasOwnProperty.call(ob, key)) {
-            // if string with spaces, add quotations (Lana Del Grey => 'Lana Del Grey')
-            if (typeof value === "string" && value.indexOf(" ") >= 0) {
-                value = "'" + value + "'";
-            }
-            // e.g. {name: 'Lana Del Grey'} => ["name='Lana Del Grey'"]
-            // e.g. {sleepy: true} => ["sleepy=true"]
-            arr.push(key + "=" + value);
-        }
-    }
-
-    // translate array of strings to a single comma-separated string
-    return arr.toString();
-}
-//  ****************************
-//  ****************************
-
-
 var orm = {
 
     // Select/Query All Records Function
     selectAll: function (tableInput, cb) {
-        var queryString = 'SELECT * FROM ' + tableInput + ';';
-        connection.query(queryString, function (err, result) {
-            if (err) {
-                throw err;
-            }
-            cb(result);
-        });
+        console.log(tableInput);
+        console.log(cb);
+        var queryString = 'SELECT * FROM ??';
+        console.log('Query: ', queryString);
+        connection.query(queryString, [tableInput], cb);
     },
     //  ****************************
 
     // Insert new Record Function
-    insertOne: function (table, cols, vals, cb) {
-        var queryString = 'INSERT INTO ' + table;
-
-        queryString += ' (';
-        queryString += cols.toString();
-        queryString += ') ';
-        queryString += 'VALUES (';
-        queryString += printQuestionMarks(vals.length);
-        queryString += ') ';
-
-        console.log(queryString);
-
-        connection.query(queryString, vals, function (err, result) {
-            if (err) {
-                throw err;
-            }
-            cb(result);
-        })
+    insertOne: function (tableInput, cols, name, cb) {
+        console.log(tableInput);
+        console.log(cols);
+        console.log(name);
+        console.log(cb);
+        var queryString = 'INSERT INTO ${tableInput} (??) VALUES (?,0)';
+        console.log('Query: ', queryString);
+        connection.query(queryString, [cols,name], cb);
     },
     //  ****************************
 
-    // Update Record Function
-    updateOne: function (table, objColVals, condition, cb) {
-        var queryString = 'UPDATE ' + table;
-
-        queryString += 'SET ';
-        queryString += objToSql(objColVals);
-        queryString += 'WHERE ';
-        queryString += condition;
-
+    // Update a Burger
+    updateOne: function (tableInput, col, val, id, cb){
+        console.log(tableInput);
+        console.log(col);
+        console.log(val);
+        console.log(id);
+        console.log(cb);
+        var queryString = 'UPDATE ${tableInput} SET ${col} = "${val}" WHERE id = "${id}" ';
         console.log(queryString);
-        connection.query(queryString, function (err, result) {
-            if (err) {
-                throw err;
-            }
-            cb(result);
-        });
-
+        connection.query(queryString, cb);
     }
 
-    // connection.query(
-    //     "UPDATE products SET ? WHERE ?",
-    //     [{
-    //             stock_quantity: quantity
-    //         },
-    //         {
-    //             item_id: product
-    //         }
-    //     ],
-}
-
+};
 
 // EXPORT
 module.exports = orm;
