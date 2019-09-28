@@ -5,10 +5,10 @@
     <div class="col">
          <h2>Burgers to be eaten!</h2>
          {{#each Burgers}}
-               {{#unless this.devoured}}
+               {{!-- {{#unless this.devoured}} --}}
                     <h4 id="{{this.id}}">{{this.burger_name}}</h4>
                     <button data-id="{{this.id}}">Eat this Burger</button>
-               {{/unless}}
+               {{!-- {{/unless}} --}}
           {{/each}}
 
     </div>
