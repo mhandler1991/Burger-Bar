@@ -1,8 +1,20 @@
      {{!-- * Setup the `index.handlebars` to have the template that Handlebars can render onto. --}}
-<form>
-     <div class='form-group'>
-          <label for='addBurger'><h2>Add Burger!</h2></label>
-          <input type='text' class='form-control' id='burgerName' placeholder="Burger Name">
-     </div>
-     <button id='addburger' type='submit' class='btn'> Add Burger </button>
-</form>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+         <h2>Burgers to be eaten!</h2>
+         {{#each Burgers}}
+               {{#unless this.devoured}}
+                    <h4 id="{{this.id}}">{{this.burger_name}}</h4>
+                    <button data-id="{{this.id}}">Eat this Burger</button>
+
+    </div>
+    <div class="col">
+         <h2>Burged that been eaten already!</h2>
+          {{#each Burgers}}
+               {{#if this.devoured}}
+                    <h4 id="{{this.id}}">{{this.burger_name}}</h4>
+    </div>
+  </div>
+</div>
