@@ -30,7 +30,12 @@ router.post('/api/burger', function (req, res) {
             throw err
         };
         console.log("INSERT DATA: ",data);
+        
         res.sendStatus(200);
+        console.log("Status Code Sent: 200");
+
+        res.redirect('/');
+        console.log("Redirect Commited...");
     });
 });
 
