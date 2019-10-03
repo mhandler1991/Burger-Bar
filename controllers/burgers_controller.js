@@ -24,6 +24,9 @@ router.get('/', function (req, res) {
 
 // Insert One
 router.post('/api/burger', function (req, res) {
+    
+    console.log('Burger Post');
+
     burger.insertOne(req.body.name, function (err, data) {
         if (err) {
             console.error(err);

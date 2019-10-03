@@ -15,12 +15,26 @@ var orm = {
 
     // Insert new Record Function
     insertOne: function (tableInput, cols, name, cb) {
+
+        // Log Values:
+        console.log("Variables::");
         console.log(tableInput);
         console.log(cols);
         console.log(name);
         console.log(cb);
-        var queryString = 'INSERT INTO ${tableInput} (??) VALUES (?,0)';
+
+        var queryString = 'INSERT INTO Burger';
+
+        queryString += ' (';
+        queryString += cols.toString();
+        queryString += ') ';
+        queryString += 'VALUES (';
+        queryString += cols;
+        queryString += ') ';
+
+        // Log Query:
         console.log('Query: ', queryString);
+
         connection.query(queryString, [cols,name], cb);
     },
     //  ****************************

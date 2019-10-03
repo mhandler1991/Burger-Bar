@@ -10,7 +10,7 @@ var burger = {
     },
     // Insert
     insertOne: function(name, cb) {
-        orm.insertOne('burgers', ['burger_name', 'devoured'],name, cb,);
+        orm.insertOne('burgers', ['burger_name'],name, cb,);
     },
     // Update
     updateOne: function(col, val, id, cb) {
